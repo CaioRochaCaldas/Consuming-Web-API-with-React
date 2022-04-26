@@ -28,7 +28,10 @@ if (app.Environment.IsDevelopment())
 
 
 
+
 app.UseHttpsRedirection();
+
+app.UseRouting();//mapeamento
 
 app.UseAuthorization();
 
