@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 //registro do cors
 app.UseCors(c =>
 {
-    c.WithOrigins("http://localhost:3000/");
+    c.WithOrigins("http://localhost:3000");
     c.AllowAnyMethod();
     c.AllowAnyHeader();
 });
