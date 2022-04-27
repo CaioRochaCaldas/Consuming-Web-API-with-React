@@ -11,7 +11,8 @@ function App() {
 const baseUrl ="https://localhost:7243/api/alunos";
 
 const [data,setData] = useState([]);
-const [modalIncluir,setModalInluir] = useState(false);
+const [modalIncluir,setModalInluir] = useState(false); //add aluno
+const [modalEditar,setModalEditar] = useState(false); //editar aluno
 
 const [alunoSelecionado,setAlunoSelecionado] = useState({
   id: '',
@@ -20,8 +21,21 @@ const [alunoSelecionado,setAlunoSelecionado] = useState({
   idade: ''
 })
 
+//metodo editar aluno do modal editar aluno
+const selecionarAluno = (aluno,opcao) =>{
+  setAlunoSelecionado(aluno);
+  (opcao === "Editar") && 
+  abrirFecharModalEditar()
+}
+
+//modal add aluno
 const abrirFecharModalIncluir=()=>{
   setModalInluir(!modalIncluir);
+}
+
+//modal editar aluno
+const abrirFecharModalEditar=()=>{
+  setModalEditar(!modalEditar);
 }
 
 //metodo handle changes permite o crud na aplicação
@@ -33,7 +47,7 @@ const handleChange = e => {
   console.log(alunoSelecionado);
 }
 
-// pedidos get de todos os alunos
+// busca todos os alunos
 const pedidoGet = async()=>{
   await axios.get(baseUrl).then(response => { 
     setData(response.data);
@@ -42,7 +56,7 @@ const pedidoGet = async()=>{
   })
 }
 
-// buscar um aluno por id 
+// buscar cria aluno 
 const pedidoPost=async()=> {
   delete alunoSelecionado.id;
   alunoSelecionado.idade=parseInt(alunoSelecionado.idade);
@@ -54,6 +68,27 @@ const pedidoPost=async()=> {
       console.log(error);
     })
 }
+
+//alterar aluno selecionado por id
+const pedidoPut = async()=>{
+  alunoSelecionado.idade=parseInt(alunoSelecionado.idade);
+  await axios.put(baseUrl+"/"+alunoSelecionado.id,alunoSelecionado)
+  .then(response=>{
+    var resposta = resposta.data;
+    var dadosAuxiliar=data;
+    dadosAuxiliar.map(aluno=>{
+      if(aluno.id===alunoSelecionado.id){
+        aluno.id=resposta.name;
+        aluno.email=resposta.email;
+        aluno.idade=resposta.idade;
+      }
+    });
+    abrirFecharModalEditar();
+  }).catch(error=>{
+    console.log(error);
+  })
+}
+
 
 useEffect(()=>{
   pedidoGet();
@@ -88,8 +123,8 @@ useEffect(()=>{
               <td>{aluno.email}</td>
               <td>{aluno.idade}</td>
               <td>
-                <button className='btn btn-primary'>Editar</button>
-                <button className='btn btn-danger'>Excluir</button>
+                <button className='btn btn-primary' onClick={()=>selecionarAluno(aluno,"Editar")}>Editar</button>
+                <button className='btn btn-danger' onClick={()=>selecionarAluno(aluno, "Excluir")}>Excluir</button>
               </td>
             </tr>
           ))}
@@ -120,6 +155,34 @@ useEffect(()=>{
           <button className='btn btn-danger' onClick={()=>abrirFecharModalIncluir()}>Cancelar</button>
         </ModalFooter>
       </Modal>
+
+      <Modal isOpen={modalEditar}>
+        <ModalHeader>Editar Aluno</ModalHeader>
+        <ModalBody>
+          <div className="form-group">
+            <label>ID: </label>
+            <input type="text" className="form-control" readOnly
+              value={alunoSelecionado && alunoSelecionado.id} />
+            <br />
+            <label>Nome: </label><br />
+            <input type="text" className="form-control" name="name" onChange={handleChange}
+              value={alunoSelecionado && alunoSelecionado.name} /><br />
+            <label>Email: </label><br />
+            <input type="text" className="form-control" name="email" onChange={handleChange}
+              value={alunoSelecionado && alunoSelecionado.email} /><br />
+            <label>Idade: </label><br />
+            <input type="text" className="form-control" name="idade" onChange={handleChange}
+              value={alunoSelecionado && alunoSelecionado.idade} /><br />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <button className="btn btn-primary" onClick={() => pedidoPut()}>Editar</button>{"  "}
+          <button className="btn btn-danger" onClick={() => abrirFecharModalEditar()} >Cancelar</button>
+        </ModalFooter>
+      </Modal>
+
+
+
 
     </div>
   );
