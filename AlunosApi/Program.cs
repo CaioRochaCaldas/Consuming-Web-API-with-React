@@ -14,10 +14,16 @@ builder.Services.AddSwaggerGen();
 //coneção sql server default aqui mesmo
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("Data Source=LAPTOP-6KK5BAFI\\SQLEXPRESS;Initial Catalog=AlunosDemoDB;Integrated Security=True"));
 
+//abilitando o cors
+builder.Services.AddCors();
+
+
 //Registro de serviço de uma entidade (Aluno)
 builder.Services.AddScoped<IAlunoService,AlunosService>();
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
@@ -25,8 +31,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
+//registro do cors
+app.UseCors(c =>
+{
+    c.WithOrigins("http://localhost:3000/");
+    c.AllowAnyMethod();
+    c.AllowAnyHeader();
+});
 
 
 app.UseHttpsRedirection();
