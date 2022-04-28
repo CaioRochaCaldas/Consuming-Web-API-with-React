@@ -24,7 +24,7 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>()
 builder.Services.AddScoped<IAuthenticate,AuthenticateService>();
 
 
-//abilitando o cors
+//abilitando o  cors 
 builder.Services.AddCors();
 
 

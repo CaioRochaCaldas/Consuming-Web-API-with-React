@@ -59,3 +59,8 @@ C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\obj\Debug\
 C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\obj\Debug\net6.0\AlunosApi.pdb
 C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\obj\Debug\net6.0\AlunosApi.genruntimeconfig.cache
 C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\obj\Debug\net6.0\ref\AlunosApi.dll
+C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Administrador\Documents\Projetos\C#\2022\AlunosApi\AlunosApi\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
