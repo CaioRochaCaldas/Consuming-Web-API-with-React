@@ -19,12 +19,18 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("Dat
 builder.Services.AddIdentity<IdentityUser,IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+//abilitando serviçõs de login logout e criar usuario
+
+builder.Services.AddScoped<IAuthenticate,AuthenticateService>();
+
+
 //abilitando o cors
 builder.Services.AddCors();
 
 
 //Registro de serviço de uma entidade (Aluno)
 builder.Services.AddScoped<IAlunoService,AlunosService>();
+
 
 var app = builder.Build();
 

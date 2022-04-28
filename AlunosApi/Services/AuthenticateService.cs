@@ -7,11 +7,13 @@ namespace AlunosApi.Services
         //implementação de login e logout
 
         //classe de usuario recebe dados do contrutor dos dados
-        private readonly SignInManager<IdentityUser> _signInManager; //ou seja, é contexto de usuarios
+        private readonly SignInManager<IdentityUser> _signInManager; //é o contexto de login de usuario
+        private readonly UserManager<IdentityUser> _userManager; // é o contexto de criar usuario
 
-        public AuthenticateService(SignInManager<IdentityUser> signInManager)
+        public AuthenticateService(SignInManager<IdentityUser> signInManager ,UserManager<IdentityUser> userManager)
         {
            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         //metodo de autenticação com os parametros passados e declarados no AppDbcontext
@@ -25,6 +27,22 @@ namespace AlunosApi.Services
         public async Task Logout()
         {
             await _signInManager.SignOutAsync(); //metodo de logout 
+        }
+
+        //registro do usuario
+        public async Task<bool> RegisterUser(string email, string password)
+        {
+            var appUser = new IdentityUser //instancia de IdentityUser
+            {
+                UserName = email,
+                Email = email,
+            };
+            var result = await _userManager.CreateAsync(appUser, password);
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(appUser, isPersistent: false); //login ok ao sair faça logout
+            }
+            return result.Succeeded;
         }
     }
 }
