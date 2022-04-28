@@ -22,7 +22,7 @@ const [alunoSelecionado,setAlunoSelecionado] = useState({
   email: '',
   idade: ''
 })
-
+//
 //metodo editar aluno do modal editar aluno ou excluir aluno
 const selecionarAluno = (aluno,opcao) =>{
   setAlunoSelecionado(aluno);
