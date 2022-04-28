@@ -4,9 +4,9 @@ namespace AlunosApi.Services
 {
     public class AuthenticateService : IAuthenticate
     {
-        //implementação de login e logout
+        //implementação de login,logout e criar usuario
 
-        //classe de usuario recebe dados do contrutor dos dados
+        
         private readonly SignInManager<IdentityUser> _signInManager; //é o contexto de login de usuario
         private readonly UserManager<IdentityUser> _userManager; // é o contexto de criar usuario
 
@@ -32,7 +32,7 @@ namespace AlunosApi.Services
         //registro do usuario
         public async Task<bool> RegisterUser(string email, string password)
         {
-            var appUser = new IdentityUser //instancia de IdentityUser
+            var appUser = new IdentityUser //instancia de IdentityUser para apontar os parametros que já vem do identity e da regra de negocio da validação
             {
                 UserName = email,
                 Email = email,

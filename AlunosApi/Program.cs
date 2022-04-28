@@ -1,9 +1,19 @@
 using AlunosApi.Context;
 using AlunosApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+//adicionando Iconfiguration devido a necessidade do AddAuthenticationda autenticação
+
+var provider = builder.Services.BuildServiceProvider();
+var Configuration = provider.GetRequiredService<IConfiguration>();
+
 
 // Add services to the container.
 
@@ -19,9 +29,24 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("Dat
 builder.Services.AddIdentity<IdentityUser,IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-//abilitando serviçõs de login logout e criar usuario
-
+//abilitando serviços de login logout e criar usuario
 builder.Services.AddScoped<IAuthenticate,AuthenticateService>();
+
+//Abilitando autenticação segundo aos padrões da microsoft dos padrões do Token JWT e tudo que ele vai receber
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true, //valida emissor do token
+        ValidateAudience = true,
+        ValidateLifetime = true, //valida tempo de vida ...
+        ValidateIssuerSigningKey = true, // ... chave de assinatura do token ...
+        ValidIssuer = Configuration["Jwt:Issuer"], // obtem o emissor do token no .appsettigs.json
+        ValidAudience = Configuration["Jwt:Audience"],// obtem a audiencia ...
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])) // valida chave do token
+    };
+});
 
 
 //abilitando o  cors 
@@ -54,6 +79,10 @@ app.UseCors(c =>
 app.UseHttpsRedirection();
 
 app.UseRouting();//mapeamento
+
+//autorização e autenticação devem estar exatamente da forma abaixo
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseAuthorization();
 
