@@ -8,7 +8,7 @@
 
 
         //loga usuario
-        Task<bool> AuthenticateAsync(string email,string password);
+        Task<bool> Authenticate(string email,string password);
         
         //Cria usuario
         Task<bool> RegisterUser(string email,string password);

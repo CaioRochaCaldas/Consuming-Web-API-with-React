@@ -16,8 +16,9 @@ namespace AlunosApi.Services
             _userManager = userManager;
         }
 
+
         //metodo de autenticação com os parametros passados e declarados no AppDbcontext
-        public async Task<bool> AuthenticateAsync(string email, string password)
+        public async Task<bool> Authenticate(string email, string password)
         {
             //email,password <- parametros , false <- se quer salvar os dados do login automatico no navegador do usuario ,lockoutOnFailure:false <- a conta do usuario é bloqueada sempre que falhar no caso botamos falso
             var result = await _signInManager.PasswordSignInAsync(email,password,false,lockoutOnFailure:false); 
