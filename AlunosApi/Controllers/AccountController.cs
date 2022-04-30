@@ -14,10 +14,10 @@ namespace AlunosApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IConfiguration _configuration; //interface de configurações base
+        private readonly IConfiguration _configuration; //interface de configurações base que refere-se ao arquivo json com a chave jwt
         private readonly IAuthenticate _authentication; //interface  de login
 
-        //É o construtor dos serviços acima
+        //Este construtor vai deixar ter acesso aos serviços acima (login + .json(jwt))
         public AccountController(IConfiguration configuration, IAuthenticate authentication)
         {
             _configuration = configuration ?? 
@@ -40,7 +40,7 @@ namespace AlunosApi.Controllers
 
             if (result)
             {
-                return Ok($"Usuário {model.Email} criado com sucesso");
+                return Ok($"Usuário {model.Email} criado com sucesso"); //tudo certo usuario criado
             }
             else
             {
@@ -51,7 +51,7 @@ namespace AlunosApi.Controllers
         }
 
 
-        //logar usuario já autenticado
+        //logar usuario já autenticado (criou email e senha  e só quer entrar)
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {
@@ -71,7 +71,7 @@ namespace AlunosApi.Controllers
             
         }
 
-        //metodo gerar token caso tudo der certo ao fazer login
+        //metodo gerar token caso tudo der certo ao fazer login logo acima
         private ActionResult<UserToken> GenerateToken(LoginModel userInfo)
         {
             var claims = new[] //aponta os integrantes do token dessa clain que é a validação futura e final do JWT

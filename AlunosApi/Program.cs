@@ -63,7 +63,7 @@ builder.Services.AddSwaggerGen(c => //declaração do swagger ate aqui
 {
     c.SwaggerDoc("v1",new OpenApiInfo { Title = "Alunos.API", Version = "v1"});
 
-    //codigo para aceitar o token na aplicação
+    //codigo para aceitar o token na aplicação em toda aplicação
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
