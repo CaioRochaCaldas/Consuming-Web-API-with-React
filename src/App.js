@@ -15,14 +15,17 @@ const [modalIncluir,setModalInluir] = useState(false); //add aluno
 const [modalEditar,setModalEditar] = useState(false); //editar aluno
 const [modalExcluir,setModalExcluir] = useState(false);//modal de excluir aluno
 const [updateData,setUpdateData] = useState(true);
-
+  
+//metodo para capturar dados do formulario e salvar
 const [alunoSelecionado,setAlunoSelecionado] = useState({
   id: '',
   name: '',
   email: '',
   idade: ''
 })
-//
+
+
+
 //metodo editar aluno do modal editar aluno ou excluir aluno
 const selecionarAluno = (aluno,opcao) =>{
   setAlunoSelecionado(aluno);
@@ -45,7 +48,7 @@ const abrirFecharModalExcluir=()=>{
 }
 
 
-//metodo handle changes permite o crud na aplicação
+//metodo handle changes permite o crud na aplicação do formulario
 const handleChange = e => {
   const {name,value} = e.target;
   setAlunoSelecionado({
