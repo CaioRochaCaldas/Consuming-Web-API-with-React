@@ -68,7 +68,7 @@ const pedidoGet = async()=>{
 
 // buscar cria aluno 
 const pedidoPost=async()=> {
-  delete alunoSelecionado.id;
+  delete alunoSelecionado.id; //temos que deletar esse id do aluno pois quem vai lidar com isso é o DB da API e não oFrontend
   alunoSelecionado.idade=parseInt(alunoSelecionado.idade);
     await axios.post(baseUrl,alunoSelecionado)
     .then(response=>{
