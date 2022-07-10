@@ -11,14 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//coneção sql server default aqui mesmo
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("Data Source=LAPTOP-6KK5BAFI\\SQLEXPRESS;Initial Catalog=AlunosDemoDB;Integrated Security=True"));
+//coneÃ§Ã£o sql server default aqui mesmo
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("\\SQLEXPRESS;Initial Catalog=AlunosDemoDB;Integrated Security=True"));
 
 //abilitando o cors
 builder.Services.AddCors();
 
 
-//Registro de serviço de uma entidade (Aluno)
+//Registro de serviÃ§o de uma entidade (Aluno)
 builder.Services.AddScoped<IAlunoService,AlunosService>();
 
 var app = builder.Build();
